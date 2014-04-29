@@ -1,8 +1,7 @@
-//import java.util.ArrayList;
-//import java.util.Scanner;
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Writer;
 import java.lang.String;
 import java.text.Format;
 import java.lang.Integer;
@@ -13,6 +12,7 @@ public class CatalogDatabase {
    private static void readStart(final File folder) {
       File file = new File();
       String format;
+      int highestID = 0;
    	
       for(final File fileEntry : folder.listFiles()) {
          file = File((fileEntry.getName() + ".txt"));
@@ -34,6 +34,9 @@ public class CatalogDatabase {
                int date = Integer.parseInt(stringDate);
             	// Add new item to database
                catalog.add(new Book(name, id, author, genre, publisher, isbn, date));
+               if(id > highestID) {
+                  highestID = id;
+               }
             }
             else if(format.compareTo("audio") == 0) {
             	// Extracting audio datafields
@@ -50,6 +53,9 @@ public class CatalogDatabase {
                int date = Integer.parseInt(stringDate);
             	// Add new item to database
                catalog.add(new Audio(format, name, id, artist, genre, composer, time, date));
+               if(id > highestID) {
+                  highestID = id;
+               }
             }
             else if(format.compareTo("newspaper") == 0) {
                String name = sc.nextLine();
@@ -63,6 +69,9 @@ public class CatalogDatabase {
                String topic = sc.nextLine();
             	// Add new item
                catalog.add(new Newspaper(name, id, datePub, issue, publisher, topic));
+               if(id > highestID) {
+                  highestID = id;
+               }
             }
             else if(format.compareTo("journal") == 0) {
                String name = sc.nextLine();
@@ -77,6 +86,9 @@ public class CatalogDatabase {
                int issn = Integer.parseInt(sc.nextLine());
             	// Add new
                catalog.add(new Journal(name, id, datePub, issue, publisher, topic, issn));
+               if(id > highestID) {
+                  highestID = id;
+               }
             }
             else if(format.compareTo("magazine") == 0) {
                String name = sc.nextLine();
@@ -90,6 +102,9 @@ public class CatalogDatabase {
                String topic = sc.nextLine();
             	// Add new item
                catalog.add(new Magazine(name, id, datePub, issue, publisher, topic));
+               if(id > highestID) {
+                  highestID = id;
+               }
             }
             else if(format.compareTo("video") == 0) {
                String name = sc.nextLine();
@@ -102,21 +117,95 @@ public class CatalogDatabase {
                int date = Integer.parseInt(stringDate);
             	// Add new item
                catalog.add(new Video(name, id, length, date));
+               if(id > highestID) {
+                  highestID = id;
+               }
             }
             else {
-               System.out.print("Unrecognized item type");
+               System.out.println("Unrecognized item type");
             }
          }
          catch (FileNotFoundException e) {
             e.printStackTrace();
          }
       }
-   	
-   	
+   	CatalogController.setCounter(highestID);
    }
 
    private static void writeToFile() {
-   	
+   	for(Item item : catalog) {
+         PrintWriiter writer = new PrintWriter(Integer.toString(item.getID()), "UTF-8");
+         if(item instanceof Book) {
+            Book bItem = (Book) item;
+            writer.println("book");
+            writer.println(bItem.getName());
+            writer.println(bItem.getID());
+            writer.println(bItem.getAuthor());
+            writer.println(bItem.getGenre());
+            writer.println(bItem.getPublisher());
+            writer.println(bItem.getISBN());
+            writer.println(bItem.getDate());
+            writer.close();
+         }
+         else if(item instanceof Audio) {
+            Audio aItem = (Audio) item);
+            writer.println("audio");
+            writer.println(aItem.getName());
+            writer.println(aItem.getID());
+            writer.println(aItem.getArtist());
+            writer.println(aItem.getGenre());
+            writer.println(aItem.getComposer());
+            writer.println(aItem.getTime());
+            writer.println(aItem.getDate());
+            writer.close());
+         }
+         else if(item instanceof Newspaper) {
+            Newspaper nItem = (Newspaper) item;
+            writer.println("newspaper");
+            writer.println(nItem.getName());
+            writer.println(nItem.getID());
+            writer.println(nItem.getDatePub());
+            writer.println(nItem.getIssue());
+            writer.println(nItem.getPublisher());
+            writer.println(nItem.getTopic());
+            writer.close());
+         }
+         else if(item instanceof Journal) {
+            Journal jItem = (Journal) item;
+            writer.println("journal");
+            writer.println(jItem.getName());
+            writer.println(jItem.getID());
+            writer.println(jItem.getDatePub());
+            writer.println(jItem.getIssue());
+            writer.println(jItem.getPublisher());
+            writer.println(jItem.getTopic());
+            writer.println(jItem.getISSN());
+            writer.close());
+         }
+         else if(item instanceof Magazine) {
+            Magazine mItem = (Magazine) item;
+            writer.println("magazine");
+            writer.println(mItem.getName());
+            writer.println(mItem.getID());
+            writer.println(mItem.getDatePub());
+            writer.println(mItem.getIssue());
+            writer.println(mItem.getPublisher());
+            writer.println(mItem.getTopic());
+            writer.close());
+         }
+         else if(item instanceof Video) {
+            Video vItem = (Video) item;
+            writer.println("video");
+            writer.println(vItem.getName());
+            writer.println(vItem.getID());
+            writer.println(vItem.getLength());
+            writer.println(vItem.getDate());
+            writer.close();
+         }
+         else {
+            System.out.println("Error writing due to item type.");
+         }
+      }
    }
 
    private static void add(Item itemIn) {
@@ -164,7 +253,7 @@ public class CatalogDatabase {
                   catalog.get(i).setDate(newInt);
                }
                else {
-                  System.out.print("Error parsing field.");
+                  System.out.println("Error parsing field.");
                }
             } 
             else if(catalog.get(i) instanceof Audio) {
@@ -189,7 +278,7 @@ public class CatalogDatabase {
                   catalog.get(i).setDate(newInt);
                }
                else {
-                  System.out.print("Error parsing field");
+                  System.out.println("Error parsing field");
                }
             }
             else if(catalog.get(i) instanceof Newspaper || catalog.get(i) instanceof Magazine) {
@@ -211,7 +300,7 @@ public class CatalogDatabase {
                   catalog.get(i).setTopic(newData);
                }
                else {
-                  System.out.print("Error parsing field");
+                  System.out.println("Error parsing field");
                }
             }
             else if(catalog.get(i) instanceof Journal) {
@@ -237,7 +326,7 @@ public class CatalogDatabase {
                   catalog.get(i).setISSN(newInt);
                }
                else {
-                  System.out.print("Error parsing field.");
+                  System.out.println("Error parsing field.");
                }
 
             }
@@ -254,11 +343,11 @@ public class CatalogDatabase {
                   catalog.get(i).setDate(newInt);
                }
                else {
-                  System.out.print("Error parsing field.");
+                  System.out.println("Error parsing field.");
                }
             }
             else {
-               System.out.print("Error parsing item type.");
+               System.out.println("Error parsing item type.");
             }
          }
          else {

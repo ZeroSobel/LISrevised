@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Writer;
 import java.lang.String;
 import java.text.Format;
 import java.lang.Integer;
@@ -57,7 +58,7 @@ public class TransactionDatabase {
             		}
             	}
             	else {
-            		System.out.print("Unknown transaction type");
+            		System.out.println("Unknown transaction type");
             	}
             }
             catch (FileNotFoundException e) {
@@ -69,7 +70,39 @@ public class TransactionDatabase {
 
 
     private static void writeToFile() {
-   	
+   		for(Transaction trans : transList) {
+   			PrintWriter writer = new PrintWriter(Integer.toString(trans.getID()), "UTF-8");
+   			if(trans instanceof Rental) {
+   				Rental rTrans = (Rental) trans;
+   				writer.println(rTrans.getID());
+   				writer.println(rTrans.getMemberID());
+   				writer.println(rTrans.getDate());
+   				writer.println(rTrans.getDueDate());
+   				writer.println(rTrans.getReturnDate());
+   				writer.println(rTrans.getItemID());
+   				writer.println(rTrans.getFee());
+   				writer.close();
+   			}
+   			else if(trans instanceof Fee) {
+   				Fee fTrans = (Fee) trans;
+   				writer.println(fTrans.getID());
+   				writer.println(fTrans.getMemberID());
+   				writer.println(fTrans.getDate());
+   				writer.println(fTrans.getFee());
+   				writer.close();
+   			}
+   			else if(trans instanceof ReserveCompTime) {
+   				ReserveCompTime rTrans = (ReserveCompTime) trans;
+   				writer.println(rTrans.getID());
+   				writer.println(rTrans.getMemberID());
+   				writer.println(rTrans.getDate());
+   				writer.println(rTrans.getCompID());
+   				writer.close();
+   			}
+   			else {
+   				System.out.println("Error writing transaction due to type.");
+   			}
+   		}
 	}
 
     private static void add(Transaction in) {
@@ -98,68 +131,68 @@ public class TransactionDatabase {
     			if(transList.get(i) instanceof Rental) {
     				if(field.compareTo("memberID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setMemberID(newInt);
+    					transList.get(i).setMemberID(newInt);
     				}
     				else if(field.compareTo("date") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setDate(newInt);
+    					transList.get(i).setDate(newInt);
     				}
     				else if(field.compareTo("dueDate") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setDueDate(newInt);
+    					transList.get(i).setDueDate(newInt);
     				}
     				else if(field.compareTo("returnDate") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setReturnDate(newInt);
+    					transList.get(i).setReturnDate(newInt);
     				}
     				else if(field.compareTo("itemID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setItemID(newInt);
+    					transList.get(i).setItemID(newInt);
     				}
     				else if(field.compareTo("fee") == 0) {
     					double newDouble = Double.parseDouble(newData);
-    					translist.get(i).setFee(newDouble);
+    					transList.get(i).setFee(newDouble);
     				}
     				else {
-    					System.out.print("Error parsing field.");
+    					System.out.println("Error parsing field.");
     				}
     			}
     			else if(transList.get(i) instanceof Fee) {
     				if(field.compareTo("memberID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setMemberID(newInt);
+    					transList.get(i).setMemberID(newInt);
     				}
     				else if(field.compareTo("date") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setDate(newInt);
+    					transList.get(i).setDate(newInt);
     				}
     				else if(field.compareTo("fee") == 0) {
     					double newDouble = Double.parseDouble(newData);
-    					translist.get(i).setFee(newDouble);
+    					transList.get(i).setFee(newDouble);
     				}
     				else {
-    					System.out.print("Error parsing field.");
+    					System.out.println("Error parsing field.");
     				}
     			}
     			else if(transList.get(i) instanceof ReserveCompTime) {
     				if(field.compareTo("memberID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setMemberID(newInt);
+    					transList.get(i).setMemberID(newInt);
     				}
     				else if(field.compareTo("date") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setDate(newInt);
+    					transList.get(i).setDate(newInt);
     				}
     				else if(field.compareTo("compID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					translist.get(i).setCompID(newInt);
+    					transList.get(i).setCompID(newInt);
     				}
     				else {
-    					System.out.print("Error parsing field.");
+    					System.out.println("Error parsing field.");
     				}
     			}
     			else {
-    				System.out.print("Error identifying object type.");
+    				System.out.println("Error identifying object type.");
     			}
     		}
     		else {

@@ -2,7 +2,7 @@ public class Employee extends Account {
 	private boolean priv;
 
 	public Employee(String nameIn, String phoneIn, String addressIn, 
-		int accountIDIn, String accountPasswordIn, bool privIn) {
+		int accountIDIn, String accountPasswordIn, boolean privIn) {
 		super(nameIn, phoneIn, addressIn, accountIDIn, accountPasswordIn);
 		priv = privIn;
 	}

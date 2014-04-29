@@ -11,6 +11,10 @@ public class CatalogController extends Controller {
 
 	}
 
+	public static void setCounter(int count) {
+		itemCounter = count;
+	}
+
 	public static void modifyItem(int id, String field, String newData) {
 		CatalogDatabase.modify(id, field, newData);
 	}

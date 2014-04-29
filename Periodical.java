@@ -1,25 +1,18 @@
-public class Newspaper extends Periodical {
-	//private String name;
-	//private int id;
-	//private int datePub;
-	//private int issue;
-	//private String publisher;
-	//private String topic;
+public class Periodical extends Item {
+	private int datePub;
+	private int issue;
+	private String publisher;
+	private String topic;
 
-	public Newspaper(String nameIn, int idIn, int datePubIn, int issueIn, 
+	public Periodical(String nameIn, int idIn, int datePubIn, int issueIn, 
 		String publisherIn, String topicIn) {
-		super(nameIn, idIn, datePubIn, issueIn, publisherIn, topicIn);
-		/*
-		name = nameIn;
-		id = idIn;
+		super(nameIn, idIn);
 		datePub = datePubIn;
 		issue = issueIn;
 		publisher = publisherIn;
 		topic = topicIn;
-		*/
 	}
 
-	/*
 	public String toString() {
 		return name+publisher+topic;
 	}
@@ -47,6 +40,5 @@ public class Newspaper extends Periodical {
 	}
 	private void setTopic(String topicIn) {
 		topic = topicIn;
-	}
-	*/
+	}	
 }
