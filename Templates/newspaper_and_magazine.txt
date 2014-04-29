@@ -1,0 +1,7 @@
+Format (book, audio, newspaper, journal, magazine, video): string
+Name: String
+ID#: int
+datePub: Date
+issue: int
+publisher: string
+topic: string

@@ -1,0 +1,7 @@
+newspaper
+Courier Journal
+3
+20140428
+5000
+Wes Jackson
+news

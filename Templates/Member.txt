@@ -1,0 +1,7 @@
+Member
+Name
+Phone
+address
+accountID
+accountPassword
+fee

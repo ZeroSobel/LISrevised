@@ -1,0 +1,5 @@
+Format (book, audio, newspaper, journal, magazine, video): string
+Name: String
+ID#: int
+length: time
+year: date
