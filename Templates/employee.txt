@@ -1,0 +1,7 @@
+employee
+Name
+Phone
+address
+accountID
+accountPassword
+priv (0 or 1)

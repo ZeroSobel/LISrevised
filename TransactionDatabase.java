@@ -8,9 +8,9 @@ import java.lang.Double;
 import java.lang.Boolean;
 
 public class TransactionDatabase {
-	private ArrayList<Transaction> transList = new ArrayList<Transaction>;
+	private static ArrayList<Transaction> transList = new ArrayList<Transaction>();
 
-	private void readStart(final File folder) {
+	private static void readStart(final File folder) {
     	File file = new File();
     	String header;
    	
@@ -57,20 +57,21 @@ public class TransactionDatabase {
     }
 
 
-    private void writeToFile() {
+    private static void writeToFile() {
    	
 	}
 
-    private void add(Transaction in) {
+    private static void add(Transaction in) {
         transList.add(in);
     }
 
-   public void remove(int id) {
+   public static void remove(int id) {
     	Iterator it = transList.iterator();
     	int i = 0;
     	while(it.hasNext()) {
         	if(it.next().getID() == id) {
             	transList.remove(i);
+            	break;
         	}
         	else {
             	i++;
@@ -78,7 +79,81 @@ public class TransactionDatabase {
     	}
 	}
 
-   public void modify(int id) {
-
-   }
+	public static void modify(int id, String field, String newData) {
+		Iterator it = transList.iterator();
+    	int i = 0;
+    	while(it.hasNext()) {
+    		if(it.next().getID() == id) {
+    			if(transList.get(i) instanceof Rental) {
+    				if(field.compareTo("memberID") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setMemberID(newInt);
+    				}
+    				else if(field.compareTo("date") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setDate(newInt);
+    				}
+    				else if(field.compareTo("dueDate") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setDueDate(newInt);
+    				}
+    				else if(field.compareTo("returnDate") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setReturnDate(newInt);
+    				}
+    				else if(field.compareTo("itemID") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setItemID(newInt);
+    				}
+    				else if(field.compareTo("fee") == 0) {
+    					double newDouble = Double.parseDouble(newData);
+    					translist.get(i).setFee(newDouble);
+    				}
+    				else {
+    					System.out.print("Error parsing field.");
+    				}
+    			}
+    			else if(transList.get(i) instanceof Fee) {
+    				if(field.compareTo("memberID") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setMemberID(newInt);
+    				}
+    				else if(field.compareTo("date") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setDate(newInt);
+    				}
+    				else if(field.compareTo("fee") == 0) {
+    					double newDouble = Double.parseDouble(newData);
+    					translist.get(i).setFee(newDouble);
+    				}
+    				else {
+    					System.out.print("Error parsing field.");
+    				}
+    			}
+    			else if(transList.get(i) instanceof ReserveCompTime) {
+    				if(field.compareTo("memberID") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setMemberID(newInt);
+    				}
+    				else if(field.compareTo("date") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setDate(newInt);
+    				}
+    				else if(field.compareTo("compID") == 0) {
+    					int newInt = Integer.parseInt(newData);
+    					translist.get(i).setCompID(newInt);
+    				}
+    				else {
+    					System.out.print("Error parsing field.");
+    				}
+    			}
+    			else {
+    				System.out.print("Error identifying object type.");
+    			}
+    		}
+    		else {
+    			i++;
+    		}
+    	}
+	}
 }

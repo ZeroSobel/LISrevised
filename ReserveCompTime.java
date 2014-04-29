@@ -8,7 +8,7 @@ public class ReserveCompTime extends Transaction {
 	public double getCompID() {
 		return compID;
 	}
-	public void setFee(int idIn) {
+	public void setCompID(int idIn) {
 		compID = idIn;
 	}
 }

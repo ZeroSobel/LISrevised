@@ -8,9 +8,9 @@ import java.text.Format;
 import java.lang.Integer;
 
 public class CatalogDatabase {
-   private ArrayList<Item> catalog = new ArrayList<Item>();
+   private static ArrayList<Item> catalog = new ArrayList<Item>();
    
-   private void readStart(final File folder) {
+   private static void readStart(final File folder) {
       File file = new File();
       String format;
    	
@@ -115,20 +115,21 @@ public class CatalogDatabase {
    	
    }
 
-   private void writeToFile() {
+   private static void writeToFile() {
    	
    }
 
-   private void add(Item itemIn) {
+   private static void add(Item itemIn) {
       catalog.add(itemIn);
    }
 
-   public void remove(int id) {
+   public static void remove(int id) {
       Iterator it = catalog.iterator();
       int i = 0;
       while(it.hasNext()) {
          if(it.next().getID() == id) {
             catalog.remove(i);
+            break;
          }
          else {
             i++;
@@ -136,7 +137,132 @@ public class CatalogDatabase {
       }
    }
 
-   public void modify(int id) {
+   public static void modify(int id, String field, String newData) {
+      Iterator it = catalog.iterator();
+      int i = 0;
+      while(it.hasNext()) {
+         if(it.next().getID() == id) {
+            if(catalog.get(i) instanceof Book) {
+               if(field.compareTo("name") == 0) {
+                  catalog.get(i).setName(newData);
+               }
+               else if(field.compareTo("author") == 0) {
+                  catalog.get(i).setAuthor(newData);
+               }
+               else if(field.compareTo("genre") == 0) {
+                  catalog.get(i).setGenre(newData);
+               }
+               else if(field.compareTo("publisher") == 0) {
+                  catalog.get(i).setPublisher(newData);
+               }
+               else if(field.compareTo("isbn") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setISBN(newInt);
+               }
+               else if(field.compareTo("date") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setDate(newInt);
+               }
+               else {
+                  System.out.print("Error parsing field.");
+               }
+            } 
+            else if(catalog.get(i) instanceof Audio) {
+               if(field.compareTo("name") == 0) {
+                  catalog.get(i).setName(newData);
+               }
+               else if(field.compareTo("artist") == 0) {
+                  catalog.get(i).setArtist(newData); 
+               }
+               else if(field.compareTo("genre") == 0) {
+                  catalog.get(i).setGenre(newData);
+               }
+               else if(field.compareTo("composer") == 0) {
+                  catalog.get(i).setComposer(newData);
+               }
+               else if(field.compareTo("time") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).settime(newInt);
+               }
+               else if(field.compareTo("date") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setDate(newInt);
+               }
+               else {
+                  System.out.print("Error parsing field");
+               }
+            }
+            else if(catalog.get(i) instanceof Newspaper || catalog.get(i) instanceof Magazine) {
+               if(field.compareTo("name") == 0) {
+                  catalog.get(i).setName(newData);
+               }
+               else if(field.compareTo("datePub") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setDatePub(newInt);
+               }
+               else if(field.compareTo("issue") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setIssue(newInt);
+               }
+               else if(field.compareTo("publisher") == 0) {
+                  catalog.get(i).setPublisher(newData);
+               }
+               else if(field.compareTo("topic") == 0) {
+                  catalog.get(i).setTopic(newData);
+               }
+               else {
+                  System.out.print("Error parsing field");
+               }
+            }
+            else if(catalog.get(i) instanceof Journal) {
+               if(field.compareTo("name") == 0) {
+                  catalog.get(i).setName(newData);
+               }
+               else if(field.compareTo("datePub") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setDatePub(newInt);
+               }
+               else if(field.compareTo("issue") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setIssue(newInt);
+               }
+               else if(field.compareTo("publisher") == 0) {
+                  catalog.get(i).setPublisher(newData);
+               }
+               else if(field.compareTo("topic") == 0) {
+                  catalog.get(i).setTopic(newData);
+               }
+               else if(field.compareTo("issn") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setISSN(newInt);
+               }
+               else {
+                  System.out.print("Error parsing field.");
+               }
 
+            }
+            else if(catalog.get(i) instanceof Video) {
+               if(field.compareTo("name") == 0) {
+                  catalog.get(i).setName(newData);
+               }
+               else if(field.compareTo("length") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setLength(newInt);
+               }
+               else if(field.compareTo("date") == 0) {
+                  int newInt = Integer.parseInt(newData);
+                  catalog.get(i).setDate(newInt);
+               }
+               else {
+                  System.out.print("Error parsing field.");
+               }
+            }
+            else {
+               System.out.print("Error parsing item type.");
+            }
+         }
+         else {
+            i++;
+         }
    }
 }
