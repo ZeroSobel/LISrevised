@@ -13,6 +13,7 @@ public class TransactionDatabase {
 	private static void readStart(final File folder) {
     	File file = new File();
     	String header;
+    	int highestTrans = 0;
    	
     	for(final File fileEntry : folder.listFiles()) {
         	file = File((fileEntry.getName() + ".txt"));
@@ -29,6 +30,9 @@ public class TransactionDatabase {
             		double fee = Double.parseDouble(sc.nextLine());
 
             		transList.add(new Rental(tid, mid, date, dueDate, returnDate, iid, fee));
+            		if(tid > highestTrans) {
+            			highestTrans = tid;
+            		}
             	}
             	else if(header.compareTo("fee") == 0) {
             		int tid = Integer.parseInt(sc.nextLine());
@@ -37,6 +41,9 @@ public class TransactionDatabase {
             		double fee = Double.parseDouble(sc.nextLine());
 
             		transList.add(new Fee(tid, mid, date, fee));
+            		if(tid > highestTrans) {
+            			highestTrans = tid;
+            		}
             	}
             	else if(header.compareTo("reservecomp") == 0) {
             		int tid = Integer.parseInt(sc.nextLine());
@@ -45,6 +52,9 @@ public class TransactionDatabase {
             		int cid = Integer.parseInt(sc.nextLine());
 
             		transList.add(new ReserveCompTime(tid, mid, date, cid));
+            		if(tid > highestTrans) {
+            			highestTrans = tid;
+            		}
             	}
             	else {
             		System.out.print("Unknown transaction type");
@@ -54,6 +64,7 @@ public class TransactionDatabase {
             	e.printStackTrace();
             }
         }
+        TransactionConroller.setCounter(highestTrans);
     }
 
 
