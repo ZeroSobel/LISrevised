@@ -23,7 +23,7 @@ public class Book extends Item {
 	}
 
 	public String toString() {
-		return this.getName()+author+genre+publisher+isbn;
+		return this.getName()+"    "+author+"    "+genre+"    "+publisher+"    "+isbn+"    "+this.getID();
 	}
 	public String getFormat() {
 		return format;

@@ -14,7 +14,7 @@ public class Periodical extends Item {
 	}
 
 	public String toString() {
-		return this.getName()+publisher+topic;
+		return this.getName()+"    "+publisher+"    "+topic;
 	}
 	public int getDatePub() {
 		return datePub;

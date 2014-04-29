@@ -24,7 +24,7 @@ public class Journal extends Periodical {
 	}
 
 	public String toString() {
-		return this.getName()+this.getPublisher()+this.getTopic()+issn;
+		return this.getName()+"    "+this.getPublisher()+"    "+this.getTopic()+"    "+issn+"    "+this.getID();
 	}
 	/*
 	private int getDatePub() {

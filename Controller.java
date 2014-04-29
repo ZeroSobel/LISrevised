@@ -1,8 +1,11 @@
-public abstract class Controller {
+public class Controller {
 	
-	abstract void retrieveInfo(int id);
+	public static void retrieveInfo(int id){}
 
-	abstract void remove(int id);
+	public static void remove(int id) {}
 
-	abstract String search(String field, String param);
+	public static String search(String field, String param){
+      String value = "";
+      return value;
+   }
 }

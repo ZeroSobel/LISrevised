@@ -15,7 +15,7 @@ public class CatalogDatabase extends Database {
       int highestID = 0;
    	
       for(final File fileEntry : folder.listFiles()) {
-         File file = new File((fileEntry.getName() + ".txt"));
+         File file = new File("Catalog/" + fileEntry.getName());
          try {
             Scanner sc = new Scanner(file);
             format = sc.nextLine();

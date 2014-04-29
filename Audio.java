@@ -21,7 +21,7 @@ public class Audio extends Item {
 	}
 
 	public String toString() {
-		return this.getName()+artist+genre+composer;
+		return this.getName()+"    "+artist+"    "+genre+"    "+composer+"    "+this.getID();
 	}
 	public String getArtist() {
 		return artist;

@@ -13,7 +13,7 @@ public class Video extends Item {
 	}
 
 	public String toString() {
-		return this.getName();
+		return this.getName()+"    "+this.getID();
 	}
 	public int getLength() {
 		return length;

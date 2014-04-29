@@ -4,4 +4,4 @@ Phone
 address
 accountID
 accountPassword
-priv (0 or 1)
+priv (true or false)

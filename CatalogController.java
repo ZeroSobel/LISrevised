@@ -67,6 +67,7 @@ public class CatalogController extends Controller {
 	}
 
 	public static String search(String field, String param) {
-
+      String value = "";
+      return value;
 	}
 }

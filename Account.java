@@ -15,6 +15,9 @@ public class Account {
 		accountPassword = accountPasswordIn;
 	}
 
+	public String toString() {
+		return name+"    "+phone+"    "+address+"    "+accountID;
+	}
 	public String getName() {
 		return name;
 	}

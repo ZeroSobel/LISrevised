@@ -18,7 +18,7 @@ public class MemberDatabase extends Database {
     	int highestAcct = 0;
    	
     	for(final File fileEntry : folder.listFiles()) {
-        	File file = new File((fileEntry.getName() + ".txt"));
+        	File file = new File("Accounts/" + fileEntry.getName());
         	try {
             	Scanner sc = new Scanner(file);
             	header = sc.nextLine();
