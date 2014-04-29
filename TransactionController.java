@@ -43,7 +43,7 @@ public class TransactionController extends Controller {
 	}
 
 	// Create and add a ReserveCompTime
-	public static void create(int idIn, int memberIDIn, int compIDI) {
+	public static void create(int idIn, int memberIDIn, int compIDIn) {
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();

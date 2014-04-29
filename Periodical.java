@@ -14,31 +14,31 @@ public class Periodical extends Item {
 	}
 
 	public String toString() {
-		return name+publisher+topic;
+		return this.getName()+publisher+topic;
 	}
-	private int getDatePub() {
+	public int getDatePub() {
 		return datePub;
 	}
-	private int getIssue() {
+	public int getIssue() {
 		return issue;
 	}
-	private String getPublisher() {
+	public String getPublisher() {
 		return publisher;
 	}
-	private String getTopic() {
+	public String getTopic() {
 		return topic;
 	}
 
-	private void setDatePub(int datePubIn) {
+	public void setDatePub(int datePubIn) {
 		datePub = datePubIn;
 	}
-	private void setIssue(int issueIn) {
+	public void setIssue(int issueIn) {
 		issue = issueIn;
 	}
-	private void setPublisher(String publisherIn) {
+	public void setPublisher(String publisherIn) {
 		publisher = publisherIn;
 	}
-	private void setTopic(String topicIn) {
+	public void setTopic(String topicIn) {
 		topic = topicIn;
 	}	
 }

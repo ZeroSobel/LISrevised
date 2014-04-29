@@ -1,21 +1,21 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Writer;
+import java.io.UnsupportedEncodingException;
+import java.io.PrintWriter;
 import java.lang.String;
 import java.text.Format;
 import java.lang.Integer;
 
-public class CatalogDatabase {
+public class CatalogDatabase extends Database {
    private static ArrayList<Item> catalog = new ArrayList<Item>();
    
-   private static void readStart(final File folder) {
-      File file = new File();
+   public static void readStart(final File folder) {
       String format;
       int highestID = 0;
    	
       for(final File fileEntry : folder.listFiles()) {
-         file = File((fileEntry.getName() + ".txt"));
+         File file = new File((fileEntry.getName() + ".txt"));
          try {
             Scanner sc = new Scanner(file);
             format = sc.nextLine();
@@ -52,7 +52,7 @@ public class CatalogDatabase {
                }
                int date = Integer.parseInt(stringDate);
             	// Add new item to database
-               catalog.add(new Audio(format, name, id, artist, genre, composer, time, date));
+               catalog.add(new Audio(name, id, artist, genre, composer, time, date));
                if(id > highestID) {
                   highestID = id;
                }
@@ -60,6 +60,7 @@ public class CatalogDatabase {
             else if(format.compareTo("newspaper") == 0) {
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               String stringDate = sc.nextLine();
                while(stringDate.length() < 8) {
                   stringDate = stringDate + "0";
                }
@@ -76,6 +77,7 @@ public class CatalogDatabase {
             else if(format.compareTo("journal") == 0) {
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               String stringDate = sc.nextLine();
                while(stringDate.length() < 8) {
                   stringDate = stringDate + "0";
                }
@@ -93,6 +95,7 @@ public class CatalogDatabase {
             else if(format.compareTo("magazine") == 0) {
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               String stringDate = sc.nextLine();
                while(stringDate.length() < 8) {
                   stringDate = stringDate + "0";
                }
@@ -129,86 +132,91 @@ public class CatalogDatabase {
             e.printStackTrace();
          }
       }
-   	CatalogController.setCounter(highestID);
+      CatalogController.setCounter(highestID);
    }
 
-   private static void writeToFile() {
-   	for(Item item : catalog) {
-         PrintWriiter writer = new PrintWriter(Integer.toString(item.getID()), "UTF-8");
-         if(item instanceof Book) {
-            Book bItem = (Book) item;
-            writer.println("book");
-            writer.println(bItem.getName());
-            writer.println(bItem.getID());
-            writer.println(bItem.getAuthor());
-            writer.println(bItem.getGenre());
-            writer.println(bItem.getPublisher());
-            writer.println(bItem.getISBN());
-            writer.println(bItem.getDate());
-            writer.close();
+   public static void writeToFile() {
+      for(Item item : catalog) {
+         try {
+            PrintWriter writer = new PrintWriter(Integer.toString(item.getID()), "UTF-8");
+            if(item instanceof Book) {
+               Book bItem = (Book) item;
+               writer.println("book");
+               writer.println(bItem.getName());
+               writer.println(bItem.getID());
+               writer.println(bItem.getAuthor());
+               writer.println(bItem.getGenre());
+               writer.println(bItem.getPublisher());
+               writer.println(bItem.getISBN());
+               writer.println(bItem.getDate());
+               writer.close();
+            }
+            else if(item instanceof Audio) {
+               Audio aItem = (Audio) item;
+               writer.println("audio");
+               writer.println(aItem.getName());
+               writer.println(aItem.getID());
+               writer.println(aItem.getArtist());
+               writer.println(aItem.getGenre());
+               writer.println(aItem.getComposer());
+               writer.println(aItem.getTime());
+               writer.println(aItem.getDate());
+               writer.close();
+            }
+            else if(item instanceof Newspaper) {
+               Newspaper nItem = (Newspaper) item;
+               writer.println("newspaper");
+               writer.println(nItem.getName());
+               writer.println(nItem.getID());
+               writer.println(nItem.getDatePub());
+               writer.println(nItem.getIssue());
+               writer.println(nItem.getPublisher());
+               writer.println(nItem.getTopic());
+               writer.close();
+            }
+            else if(item instanceof Journal) {
+               Journal jItem = (Journal) item;
+               writer.println("journal");
+               writer.println(jItem.getName());
+               writer.println(jItem.getID());
+               writer.println(jItem.getDatePub());
+               writer.println(jItem.getIssue());
+               writer.println(jItem.getPublisher());
+               writer.println(jItem.getTopic());
+               writer.println(jItem.getISSN());
+               writer.close();
+            }
+            else if(item instanceof Magazine) {
+               Magazine mItem = (Magazine) item;
+               writer.println("magazine");
+               writer.println(mItem.getName());
+               writer.println(mItem.getID());
+               writer.println(mItem.getDatePub());
+               writer.println(mItem.getIssue());
+               writer.println(mItem.getPublisher());
+               writer.println(mItem.getTopic());
+               writer.close();
+            }
+            else if(item instanceof Video) {
+               Video vItem = (Video) item;
+               writer.println("video");
+               writer.println(vItem.getName());
+               writer.println(vItem.getID());
+               writer.println(vItem.getLength());
+               writer.println(vItem.getDate());
+               writer.close();
+            }
+            else {
+               System.out.println("Error writing due to item type.");
+            }
+         } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            System.out.println(e.getMessage());
          }
-         else if(item instanceof Audio) {
-            Audio aItem = (Audio) item);
-            writer.println("audio");
-            writer.println(aItem.getName());
-            writer.println(aItem.getID());
-            writer.println(aItem.getArtist());
-            writer.println(aItem.getGenre());
-            writer.println(aItem.getComposer());
-            writer.println(aItem.getTime());
-            writer.println(aItem.getDate());
-            writer.close());
-         }
-         else if(item instanceof Newspaper) {
-            Newspaper nItem = (Newspaper) item;
-            writer.println("newspaper");
-            writer.println(nItem.getName());
-            writer.println(nItem.getID());
-            writer.println(nItem.getDatePub());
-            writer.println(nItem.getIssue());
-            writer.println(nItem.getPublisher());
-            writer.println(nItem.getTopic());
-            writer.close());
-         }
-         else if(item instanceof Journal) {
-            Journal jItem = (Journal) item;
-            writer.println("journal");
-            writer.println(jItem.getName());
-            writer.println(jItem.getID());
-            writer.println(jItem.getDatePub());
-            writer.println(jItem.getIssue());
-            writer.println(jItem.getPublisher());
-            writer.println(jItem.getTopic());
-            writer.println(jItem.getISSN());
-            writer.close());
-         }
-         else if(item instanceof Magazine) {
-            Magazine mItem = (Magazine) item;
-            writer.println("magazine");
-            writer.println(mItem.getName());
-            writer.println(mItem.getID());
-            writer.println(mItem.getDatePub());
-            writer.println(mItem.getIssue());
-            writer.println(mItem.getPublisher());
-            writer.println(mItem.getTopic());
-            writer.close());
-         }
-         else if(item instanceof Video) {
-            Video vItem = (Video) item;
-            writer.println("video");
-            writer.println(vItem.getName());
-            writer.println(vItem.getID());
-            writer.println(vItem.getLength());
-            writer.println(vItem.getDate());
-            writer.close();
-         }
-         else {
-            System.out.println("Error writing due to item type.");
-         }
+         
       }
    }
 
-   private static void add(Item itemIn) {
+   public static void add(Item itemIn) {
       catalog.add(itemIn);
    }
 
@@ -216,7 +224,7 @@ public class CatalogDatabase {
       Iterator it = catalog.iterator();
       int i = 0;
       while(it.hasNext()) {
-         if(it.next().getID() == id) {
+         if(((Item) it.next()).getID() == id) {
             catalog.remove(i);
             break;
          }
@@ -230,27 +238,27 @@ public class CatalogDatabase {
       Iterator it = catalog.iterator();
       int i = 0;
       while(it.hasNext()) {
-         if(it.next().getID() == id) {
+         if(((Item) it.next()).getID() == id) {
             if(catalog.get(i) instanceof Book) {
                if(field.compareTo("name") == 0) {
                   catalog.get(i).setName(newData);
                }
                else if(field.compareTo("author") == 0) {
-                  catalog.get(i).setAuthor(newData);
+                  ((Book) catalog.get(i)).setAuthor(newData);
                }
                else if(field.compareTo("genre") == 0) {
-                  catalog.get(i).setGenre(newData);
+                  ((Book) catalog.get(i)).setGenre(newData);
                }
                else if(field.compareTo("publisher") == 0) {
-                  catalog.get(i).setPublisher(newData);
+                  ((Book) catalog.get(i)).setPublisher(newData);
                }
                else if(field.compareTo("isbn") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setISBN(newInt);
+                  ((Book) catalog.get(i)).setISBN(newInt);
                }
                else if(field.compareTo("date") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setDate(newInt);
+                  ((Book) catalog.get(i)).setDate(newInt);
                }
                else {
                   System.out.println("Error parsing field.");
@@ -258,24 +266,24 @@ public class CatalogDatabase {
             } 
             else if(catalog.get(i) instanceof Audio) {
                if(field.compareTo("name") == 0) {
-                  catalog.get(i).setName(newData);
+                  ((Audio) catalog.get(i)).setName(newData);
                }
                else if(field.compareTo("artist") == 0) {
-                  catalog.get(i).setArtist(newData); 
+                  ((Audio) catalog.get(i)).setArtist(newData); 
                }
                else if(field.compareTo("genre") == 0) {
-                  catalog.get(i).setGenre(newData);
+                  ((Audio) catalog.get(i)).setGenre(newData);
                }
                else if(field.compareTo("composer") == 0) {
-                  catalog.get(i).setComposer(newData);
+                  ((Audio) catalog.get(i)).setComposer(newData);
                }
                else if(field.compareTo("time") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).settime(newInt);
+                  ((Audio) catalog.get(i)).setTime(newInt);
                }
                else if(field.compareTo("date") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setDate(newInt);
+                  ((Audio) catalog.get(i)).setDate(newInt);
                }
                else {
                   System.out.println("Error parsing field");
@@ -283,21 +291,21 @@ public class CatalogDatabase {
             }
             else if(catalog.get(i) instanceof Newspaper || catalog.get(i) instanceof Magazine) {
                if(field.compareTo("name") == 0) {
-                  catalog.get(i).setName(newData);
+                  ((Periodical) catalog.get(i)).setName(newData);
                }
                else if(field.compareTo("datePub") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setDatePub(newInt);
+                  ((Periodical) catalog.get(i)).setDatePub(newInt);
                }
                else if(field.compareTo("issue") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setIssue(newInt);
+                  ((Periodical) catalog.get(i)).setIssue(newInt);
                }
                else if(field.compareTo("publisher") == 0) {
-                  catalog.get(i).setPublisher(newData);
+                  ((Periodical) catalog.get(i)).setPublisher(newData);
                }
                else if(field.compareTo("topic") == 0) {
-                  catalog.get(i).setTopic(newData);
+                  ((Periodical) catalog.get(i)).setTopic(newData);
                }
                else {
                   System.out.println("Error parsing field");
@@ -305,42 +313,41 @@ public class CatalogDatabase {
             }
             else if(catalog.get(i) instanceof Journal) {
                if(field.compareTo("name") == 0) {
-                  catalog.get(i).setName(newData);
+                  ((Journal) catalog.get(i)).setName(newData);
                }
                else if(field.compareTo("datePub") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setDatePub(newInt);
+                  ((Journal) catalog.get(i)).setDatePub(newInt);
                }
                else if(field.compareTo("issue") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setIssue(newInt);
+                  ((Journal) catalog.get(i)).setIssue(newInt);
                }
                else if(field.compareTo("publisher") == 0) {
-                  catalog.get(i).setPublisher(newData);
+                  ((Journal) catalog.get(i)).setPublisher(newData);
                }
                else if(field.compareTo("topic") == 0) {
-                  catalog.get(i).setTopic(newData);
+                  ((Journal) catalog.get(i)).setTopic(newData);
                }
                else if(field.compareTo("issn") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setISSN(newInt);
+                  ((Journal) catalog.get(i)).setISSN(newInt);
                }
                else {
                   System.out.println("Error parsing field.");
                }
-
             }
             else if(catalog.get(i) instanceof Video) {
                if(field.compareTo("name") == 0) {
-                  catalog.get(i).setName(newData);
+                  ((Video) catalog.get(i)).setName(newData);
                }
                else if(field.compareTo("length") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setLength(newInt);
+                  ((Video) catalog.get(i)).setLength(newInt);
                }
                else if(field.compareTo("date") == 0) {
                   int newInt = Integer.parseInt(newData);
-                  catalog.get(i).setDate(newInt);
+                  ((Video) catalog.get(i)).setDate(newInt);
                }
                else {
                   System.out.println("Error parsing field.");
@@ -353,5 +360,6 @@ public class CatalogDatabase {
          else {
             i++;
          }
+     }
    }
 }

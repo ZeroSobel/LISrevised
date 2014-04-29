@@ -24,7 +24,7 @@ public class Journal extends Periodical {
 	}
 
 	public String toString() {
-		return name+publisher+topic+issn;
+		return this.getName()+this.getPublisher()+this.getTopic()+issn;
 	}
 	/*
 	private int getDatePub() {
@@ -40,7 +40,7 @@ public class Journal extends Periodical {
 		return topic;
 	}
 	*/
-	private int getISSN() {
+	public int getISSN() {
 		return issn;
 	}
 	/*
@@ -57,7 +57,7 @@ public class Journal extends Periodical {
 		topic = topicIn;
 	}
 	*/
-	private void setISSN(int issnIn) {
+	public void setISSN(int issnIn) {
 		issn = issnIn;
 	}
 

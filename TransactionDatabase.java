@@ -1,23 +1,23 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Writer;
+import java.io.UnsupportedEncodingException;
+import java.io.PrintWriter;
 import java.lang.String;
 import java.text.Format;
 import java.lang.Integer;
 import java.lang.Double;
 import java.lang.Boolean;
 
-public class TransactionDatabase {
+public class TransactionDatabase extends Database {
 	private static ArrayList<Transaction> transList = new ArrayList<Transaction>();
 
-	private static void readStart(final File folder) {
-    	File file = new File();
+	public static void readStart(final File folder) {
     	String header;
     	int highestTrans = 0;
    	
     	for(final File fileEntry : folder.listFiles()) {
-        	file = File((fileEntry.getName() + ".txt"));
+        	File file = new File((fileEntry.getName() + ".txt"));
         	try {
             	Scanner sc = new Scanner(file);
             	header = sc.nextLine();
@@ -65,55 +65,60 @@ public class TransactionDatabase {
             	e.printStackTrace();
             }
         }
-        TransactionConroller.setCounter(highestTrans);
+        TransactionController.setCounter(highestTrans);
     }
 
 
-    private static void writeToFile() {
+    public static void writeToFile() {
    		for(Transaction trans : transList) {
-   			PrintWriter writer = new PrintWriter(Integer.toString(trans.getID()), "UTF-8");
-   			if(trans instanceof Rental) {
-   				Rental rTrans = (Rental) trans;
-   				writer.println(rTrans.getID());
-   				writer.println(rTrans.getMemberID());
-   				writer.println(rTrans.getDate());
-   				writer.println(rTrans.getDueDate());
-   				writer.println(rTrans.getReturnDate());
-   				writer.println(rTrans.getItemID());
-   				writer.println(rTrans.getFee());
-   				writer.close();
-   			}
-   			else if(trans instanceof Fee) {
-   				Fee fTrans = (Fee) trans;
-   				writer.println(fTrans.getID());
-   				writer.println(fTrans.getMemberID());
-   				writer.println(fTrans.getDate());
-   				writer.println(fTrans.getFee());
-   				writer.close();
-   			}
-   			else if(trans instanceof ReserveCompTime) {
-   				ReserveCompTime rTrans = (ReserveCompTime) trans;
-   				writer.println(rTrans.getID());
-   				writer.println(rTrans.getMemberID());
-   				writer.println(rTrans.getDate());
-   				writer.println(rTrans.getCompID());
-   				writer.close();
-   			}
-   			else {
-   				System.out.println("Error writing transaction due to type.");
-   			}
+        try {
+          PrintWriter writer = new PrintWriter(Integer.toString(trans.getID()), "UTF-8");
+          if(trans instanceof Rental) {
+            Rental rTrans = (Rental) trans;
+            writer.println(rTrans.getID());
+            writer.println(rTrans.getMemberID());
+            writer.println(rTrans.getDate());
+            writer.println(rTrans.getDueDate());
+            writer.println(rTrans.getReturnDate());
+            writer.println(rTrans.getItemID());
+            writer.println(rTrans.getFee());
+            writer.close();
+          }
+          else if(trans instanceof Fee) {
+            Fee fTrans = (Fee) trans;
+            writer.println(fTrans.getID());
+            writer.println(fTrans.getMemberID());
+            writer.println(fTrans.getDate());
+            writer.println(fTrans.getFee());
+            writer.close();
+          }
+          else if(trans instanceof ReserveCompTime) {
+            ReserveCompTime rTrans = (ReserveCompTime) trans;
+            writer.println(rTrans.getID());
+            writer.println(rTrans.getMemberID());
+            writer.println(rTrans.getDate());
+            writer.println(rTrans.getCompID());
+            writer.close();
+          }
+          else {
+            System.out.println("Error writing transaction due to type.");
+          }
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+          System.out.println(e.getMessage());
+        }
+   			
    		}
 	}
 
-    private static void add(Transaction in) {
+    public static void add(Transaction in) {
         transList.add(in);
     }
 
-   public static void remove(int id) {
+    public static void remove(int id) {
     	Iterator it = transList.iterator();
     	int i = 0;
     	while(it.hasNext()) {
-        	if(it.next().getID() == id) {
+        	if(((Item) it.next()).getID() == id) {
             	transList.remove(i);
             	break;
         	}
@@ -127,65 +132,68 @@ public class TransactionDatabase {
 		Iterator it = transList.iterator();
     	int i = 0;
     	while(it.hasNext()) {
-    		if(it.next().getID() == id) {
+    		if(((Item) it.next()).getID() == id) {
     			if(transList.get(i) instanceof Rental) {
+               Rental rTrans = (Rental) transList.get(i);
     				if(field.compareTo("memberID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setMemberID(newInt);
+    					rTrans.setMemberID(newInt);
     				}
     				else if(field.compareTo("date") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setDate(newInt);
+    					rTrans.setDate(newInt);
     				}
     				else if(field.compareTo("dueDate") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setDueDate(newInt);
+    					rTrans.setDueDate(newInt);
     				}
     				else if(field.compareTo("returnDate") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setReturnDate(newInt);
+    					rTrans.setReturnDate(newInt);
     				}
     				else if(field.compareTo("itemID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setItemID(newInt);
+    					rTrans.setItemID(newInt);
     				}
     				else if(field.compareTo("fee") == 0) {
     					double newDouble = Double.parseDouble(newData);
-    					transList.get(i).setFee(newDouble);
+    					rTrans.setFee(newDouble);
     				}
     				else {
     					System.out.println("Error parsing field.");
     				}
     			}
     			else if(transList.get(i) instanceof Fee) {
+               Fee fTrans = (Fee) transList.get(i);
     				if(field.compareTo("memberID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setMemberID(newInt);
+    					fTrans.setMemberID(newInt);
     				}
     				else if(field.compareTo("date") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setDate(newInt);
+    					fTrans.setDate(newInt);
     				}
     				else if(field.compareTo("fee") == 0) {
     					double newDouble = Double.parseDouble(newData);
-    					transList.get(i).setFee(newDouble);
+    					fTrans.setFee(newDouble);
     				}
     				else {
     					System.out.println("Error parsing field.");
     				}
     			}
     			else if(transList.get(i) instanceof ReserveCompTime) {
-    				if(field.compareTo("memberID") == 0) {
+    				ReserveCompTime rTrans = (ReserveCompTime) transList.get(i);
+               if(field.compareTo("memberID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setMemberID(newInt);
+    					rTrans.setMemberID(newInt);
     				}
     				else if(field.compareTo("date") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setDate(newInt);
+    					rTrans.setDate(newInt);
     				}
     				else if(field.compareTo("compID") == 0) {
     					int newInt = Integer.parseInt(newData);
-    					transList.get(i).setCompID(newInt);
+    					rTrans.setCompID(newInt);
     				}
     				else {
     					System.out.println("Error parsing field.");

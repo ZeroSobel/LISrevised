@@ -6,7 +6,7 @@ public class Rental extends Transaction {
 
 	public Rental(int idIn, int memberIDIn, int dateIn, int dueDateIn, 
 		int returnDateIn, int itemIDIn, double feeIn) {
-		super(idIn, memberIDin, dateIn);
+		super(idIn, memberIDIn, dateIn);
 		dueDate = dueDateIn;
 		returnDate = returnDateIn;
 		itemID = itemIDIn;

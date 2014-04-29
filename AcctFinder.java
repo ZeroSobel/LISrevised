@@ -15,7 +15,7 @@ public class AcctFinder extends Controller {
 		acctCounter = count;
 	}
 
-	public static modifyMember(int id, String field, String newData) {
+	public static void modifyMember(int id, String field, String newData) {
 		MemberDatabase.modify(id, field, newData);
 	}
 

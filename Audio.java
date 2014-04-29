@@ -21,7 +21,7 @@ public class Audio extends Item {
 	}
 
 	public String toString() {
-		return name+artist+genre+composer;
+		return this.getName()+artist+genre+composer;
 	}
 	public String getArtist() {
 		return artist;
@@ -43,7 +43,7 @@ public class Audio extends Item {
 		artist = artistIn;
 	}
 	public void setGenre(String genreIn) {
-		genre = genreIn:
+		genre = genreIn;
 	}
 	public void setComposer(String composerIn) {
 		composer = composerIn;

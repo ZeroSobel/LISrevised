@@ -4,7 +4,7 @@ public class Book extends Item {
 	//private int id;
 	private String author;
 	private String genre;
-	private Stringp publisher;
+	private String publisher;
 	private int isbn;
 	private int date;
 
@@ -23,7 +23,7 @@ public class Book extends Item {
 	}
 
 	public String toString() {
-		return name+author+genre+publisher+isbn;
+		return this.getName()+author+genre+publisher+isbn;
 	}
 	public String getFormat() {
 		return format;

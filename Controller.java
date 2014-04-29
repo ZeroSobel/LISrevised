@@ -1,8 +1,8 @@
-abstract class Controller {
+public abstract class Controller {
 	
-	void retrieveInfo(int id) {}
+	abstract void retrieveInfo(int id);
 
-	void remove(int id) {}
+	abstract void remove(int id);
 
-	String search(String field, String param) {}
+	abstract String search(String field, String param);
 }
