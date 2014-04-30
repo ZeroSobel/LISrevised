@@ -51,39 +51,39 @@ public class CatalogController extends Controller {
 		int isbn, int date) {
 
 		incCounter();
-		CatalogDatabase.add(new Book(name, itemCounter, author, genre, publisher, isbn, date));
+		CatalogDatabase.add(new Book(name, itemCounter, 0, 0, 0, author, genre, publisher, isbn, date));
 	}
 
 	public static void createAudio(String name, String artist, String genre, String composer,
 		int time, int date) {
 
 		incCounter();
-		CatalogDatabase.add(new Audio(name, itemCounter, artist, genre, composer, time, date));
+		CatalogDatabase.add(new Audio(name, itemCounter, 0, 0, 0, artist, genre, composer, time, date));
 	}
 
 	public static void createMagazine(String name, int datePub, int issue, String publisher, String topic) {
 
 		incCounter();
-		CatalogDatabase.add(new Magazine(name, itemCounter, datePub, issue, publisher, topic));
+		CatalogDatabase.add(new Magazine(name, itemCounter, 0, 0, 0, datePub, issue, publisher, topic));
 	}
 
 	public static void createJournal(String name, int datePub, int issue, String publisher,
 		String topic, int issn) {
 
 		incCounter();
-		CatalogDatabase.add(new Journal(name, itemCounter, datePub, issue, publisher, topic, issn));
+		CatalogDatabase.add(new Journal(name, itemCounter, 0, 0, 0, datePub, issue, publisher, topic, issn));
 	}
 
 	public static void createNewspaper(String name, int datePub, int issue, String publisher, String topic) {
 
 		incCounter();
-		CatalogDatabase.add(new Newspaper(name, itemCounter, datePub, issue, publisher, topic));
+		CatalogDatabase.add(new Newspaper(name, itemCounter, 0, 0, 0, datePub, issue, publisher, topic));
 	}
 
 	public static void createVideo(String name, int length, int date) {
 
 		incCounter();
-		CatalogDatabase.add(new Video(name, itemCounter, length, date));
+		CatalogDatabase.add(new Video(name, itemCounter, 0, 0, 0, length, date));
 	}
 
 	public static boolean remove(int id) {
