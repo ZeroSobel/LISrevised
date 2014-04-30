@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class UIMainScreen extends UserInterface {
-   private static final String notLogged = "Options:\n1) Log in\n2) Register\n3) Navigate Catalog\n4) Shut down\n";
+   private static final String notLogged = "\n\nOptions:\n1) Log in\n2) Register\n3) Navigate Catalog\n4) Shut down\n";
    private static final String logged = "Options:\n1) Navigate Catalog\n2) Reserve Computer Time\n" + 
    	"3) Reserve an Item\n4) Recall an Item\n5) Manage Account\n6) Shut down\n";
    private static final String adminS = "Options:\n1) Navigate Catalog\n2) Check Out\n3) Check In\n" +
@@ -12,45 +12,45 @@ public class UIMainScreen extends UserInterface {
    
    }
    public static void show(boolean loggedIn, boolean admin) {
-   //this.setLogin(loggedIn);
-   //this.setAdmin(admin);
-      boolean pass = false;
-      int selection = 0;
-      if(!loggedIn) {
-         System.out.println(notLogged);
-         Scanner sc = new Scanner(System.in);
-         while(!pass) {
-            selection = sc.nextInt();
-            if(selection > 0 && selection < 5) {
-               pass = true;
+      while(true) {
+         boolean pass = false;
+         int selection = 0;
+         if(!loggedIn) {
+            System.out.println(notLogged);
+            Scanner sc = new Scanner(System.in);
+            while(!pass) {
+               selection = sc.nextInt();
+               if(selection > 0 && selection < 5) {
+                  pass = true;
+               }
             }
+            execute(selection, loggedIn, admin);
          }
-         execute(selection, loggedIn, admin);
-      }
-      else if(loggedIn && !admin) {
-         System.out.println(logged);
-         Scanner sc = new Scanner(System.in);
-         while(!pass) {
-            selection = sc.nextInt();
-            if(selection > 0 || selection < 6) {
-               pass = true;
+         else if(loggedIn && !admin) {
+            System.out.println(logged);
+            Scanner sc = new Scanner(System.in);
+            while(!pass) {
+               selection = sc.nextInt();
+               if(selection > 0 || selection < 6) {
+                  pass = true;
+               }
             }
+            execute(selection, loggedIn, admin);
          }
-         execute(selection, loggedIn, admin);
-      }
-      else if(loggedIn && admin) {
-         System.out.println(adminS);
-         Scanner sc = new Scanner(System.in);
-         while(!pass) {
-            selection = sc.nextInt();
-            if(selection > 0 || selection < 14) {
-               pass = true;
+         else if(loggedIn && admin) {
+            System.out.println(adminS);
+            Scanner sc = new Scanner(System.in);
+            while(!pass) {
+               selection = sc.nextInt();
+               if(selection > 0 || selection < 14) {
+                  pass = true;
+               }
             }
+            execute(selection, loggedIn, admin);
          }
-         execute(selection, loggedIn, admin);
-      }
-      else {
-         System.out.println("Error with login status.");
+         else {
+            System.out.println("Error with login status.");
+         }
       }
    }
    public static void execute(int input, boolean loggedIn, boolean admin) {
@@ -117,6 +117,7 @@ public class UIMainScreen extends UserInterface {
             case 11: UIMemberReport.show(loggedIn, admin);
                break;
             case 12: UIModifyAccount.show(loggedIn, admin);
+               UIMainScreen.show(true, true);
                break;
             case 13:
                MemberDatabase.writeToFile();

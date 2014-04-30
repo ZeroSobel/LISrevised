@@ -142,15 +142,13 @@ public class TransactionDatabase extends Database {
       Iterator it = transList.iterator();
       int i = 0;
       Transaction output = null;
-      while(it.hasNext()) {
-         if(it.next() instanceof Rental) {
-            Rental holder = (Rental) transList.get(i);
+      
+      for(Transaction t : transList) {
+         if(t instanceof Rental) {
+            Rental holder = (Rental) t;
             if(holder.getItemID() == id && holder.getReturnDate() == 0) {
                output = holder;
             }
-         }
-         else {
-            i++;
          }
       }
       return output;
@@ -160,8 +158,10 @@ public class TransactionDatabase extends Database {
    public static void modify(int id, String field, String newData) {
       Iterator it = transList.iterator();
       int i = 0;
+
+
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
+         if(((Transaction) it.next()).getID() == id) {
             if(transList.get(i) instanceof Rental) {
                Rental rTrans = (Rental) transList.get(i);
                if(field.compareTo("memberID") == 0) {

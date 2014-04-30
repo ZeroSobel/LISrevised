@@ -11,6 +11,8 @@ public class UIQuerySister extends UserInterface {
    }
    
    public static void getFrom(boolean loggedIn, boolean admin) {
+      Scanner sc = new Scanner(System.in);
+      String useless = sc.nextLine();
       //We have no sister libraries so RNG will tell you if Library B has it or not
       double chance = Math.random();
       if(chance > 0.5) {

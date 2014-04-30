@@ -26,7 +26,6 @@ public class UILogIn extends UserInterface {
 		boolean valid = false;
 		Scanner sc = new Scanner(System.in);
 
-		while(!valid) {
 			input = sc.nextLine();
 			userID = input;
 			if(userID.compareToIgnoreCase("goback") == 0) {
@@ -49,7 +48,6 @@ public class UILogIn extends UserInterface {
 						break;
 				}
 
-			}
 		}
 	}
 }

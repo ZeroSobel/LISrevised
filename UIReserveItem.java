@@ -7,9 +7,6 @@ public class UIReserveItem extends UserInterface {
    
    public static void show(boolean loggedIn, boolean admin) {
       System.out.println(prompt);
-      
-   }
-   public static void holdForMem(boolean loggedIn, boolean admin) {
       Scanner sc = new Scanner(System.in);
       int toReserve = sc.nextInt();
       int currentID = AcctFinder.getCurrentAcct().getAccountID();
@@ -21,5 +18,11 @@ public class UIReserveItem extends UserInterface {
          System.out.println(no);
       }
       UIMainScreen.show(loggedIn, admin);
+      
+      //holdForMem(loggedIn, admin);
    }
+   /*
+   public static void holdForMem(boolean loggedIn, boolean admin) {
+      
+   }*/
 }

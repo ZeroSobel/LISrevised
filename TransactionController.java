@@ -39,7 +39,7 @@ public class TransactionController extends Controller {
 	public static void closeRental(int iid) {
         Rental holder = null;
 		holder = (Rental) TransactionController.retrieveUnreturnedByID(iid);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
 		int dateIn = Integer.parseInt(dateFormat.format(date));
 		TransactionController.modifyTrans(holder.getID(), "returnDate",  Integer.toString(dateIn));
@@ -62,7 +62,7 @@ public class TransactionController extends Controller {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.add(Calendar.DATE, 7);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		String outDate = dateFormat.format(c.getTime());
 
 		TransactionController.modifyTrans(holder.getID(), "dueDate", outDate);
@@ -72,9 +72,16 @@ public class TransactionController extends Controller {
 	public static void create(int memberIDIn, double feeIn) {
 
 		incCounter();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
 		int dateIn = Integer.parseInt(dateFormat.format(date));
+      
+      Calendar c = Calendar.getInstance();
+      c.setTime(new Date());
+      DateFormat df = new SimpleDateFormat("yyyymmdd");
+      String outDate = df.format(c.getTime());
+      dateIn = Integer.parseInt(outDate);
+      
 		TransactionDatabase.add(new Fee(transCounter, memberIDIn, dateIn, feeIn));
 	}
 
@@ -82,7 +89,7 @@ public class TransactionController extends Controller {
 	public static void create(int idIn, int memberIDIn, int compIDIn) {
 
 		incCounter();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
 		int dateIn = Integer.parseInt(dateFormat.format(date));
 		TransactionDatabase.add(new ReserveCompTime(transCounter, memberIDIn, dateIn, compIDIn));

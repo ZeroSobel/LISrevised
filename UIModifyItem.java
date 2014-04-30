@@ -9,7 +9,7 @@ public class UIModifyItem extends UserInterface {
    
    private static void makeChange() {
       Scanner sc = new Scanner(System.in);
-      int toMod = sc.nextInt();
+      int toMod = Integer.parseInt(sc.nextLine());
       String field = sc.nextLine();
       String newData = sc.nextLine();
       

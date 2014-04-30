@@ -154,19 +154,24 @@ public class MemberDatabase extends Database {
     			if(members.get(i) instanceof Employee) {
     				if(field.compareTo("name") == 0) {
     					((Employee)members.get(i)).setName(newData);
+                  break;
     				}
     				else if(field.compareTo("phone") == 0) {
     					((Employee)members.get(i)).setPhone(newData);
+                  break;
     				}
     				else if(field.compareTo("address") == 0) {
     					((Employee)members.get(i)).setAddress(newData);
+                  break;
     				}
     				else if(field.compareTo("accountPassword") == 0) {
     					((Employee)members.get(i)).setAccountPassword(newData);
+                  break;
     				}
     				else if(field.compareTo("priv") == 0) {
     					boolean newBool = Boolean.parseBoolean(newData);
     					((Employee)members.get(i)).setPriv(newBool);
+                  break;
     				}
     				else {
     					System.out.println("Error parsing field.");
@@ -175,19 +180,24 @@ public class MemberDatabase extends Database {
     			else if(members.get(i) instanceof Member) {
     				if(field.compareTo("name") == 0) {
     					((Member)members.get(i)).setName(newData);
+                  break;
     				}
     				else if(field.compareTo("phone") == 0) {
     					((Member)members.get(i)).setPhone(newData);
+                  break;
     				}
     				else if(field.compareTo("address") == 0) {
     					((Member)members.get(i)).setAddress(newData);
+                  break;
     				}
     				else if(field.compareTo("accountPassowrd") == 0) {
     					((Member)members.get(i)).setAccountPassword(newData);
+                  break;
     				}
     				else if(field.compareTo("fee") == 0) {
     					Double newDo = Double.parseDouble(newData);
     					((Member)members.get(i)).setFee(newDo);
+                  break;
     				}
     				else {
     					System.out.println("Error parsing field.");

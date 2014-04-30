@@ -1,7 +1,7 @@
 member
 Tyler
-1234567
-not
+asdf
+College St
 2
 asdf
 0.0

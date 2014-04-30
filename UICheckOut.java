@@ -11,10 +11,13 @@ public class UICheckOut extends UserInterface {
    
    private static void take() {
       Scanner sc = new Scanner(System.in);
-      int mid = sc.nextInt();
-      int iid = sc.nextInt();
+      int mid = Integer.parseInt(sc.nextLine());
+      int iid = Integer.parseInt(sc.nextLine());
       int dueDate = sc.nextInt();
-      if((CatalogController.getReserve(iid) == 0 || CatalogController.getReserve(iid) == mid) && CatalogController.getCheck(iid) == 0) {
+      boolean notReserved = (CatalogController.getReserve(iid) == 0);
+      boolean meReserved = (CatalogController.getReserve(iid) == mid);
+      boolean notChecked = (CatalogController.getCheck(iid) == 0);
+      if((notReserved || meReserved) && notChecked) {
          TransactionController.create(mid, dueDate, 00000000, iid, 0);
          CatalogController.placeCheck(iid, mid);
       }

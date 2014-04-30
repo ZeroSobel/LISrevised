@@ -280,6 +280,13 @@ public class CatalogDatabase extends Database {
             i++;
          }
       }
+      try {
+         File file = new File("Catalog\\" + id + ".txt");
+         boolean success = file.delete();
+      } catch (Exception e){
+         e.printStackTrace();
+      }
+      
       return out;
    }
 
@@ -300,10 +307,12 @@ public class CatalogDatabase extends Database {
    
    public static void changeOrder(int id, int amount) {
       Iterator it = catalog.iterator();
+      id--;
       int i = 0;
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
-            ((Item) it.next()).setOrder(amount);
+         Item holder = (Item) it.next();
+         if(holder.getID() == id) {
+            holder.setOrder(amount);
             break;
          }
          else {
@@ -317,7 +326,7 @@ public class CatalogDatabase extends Database {
       Iterator it = catalog.iterator();
       int i = 0;
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
+         if(((Item) it.next()).getID() == (id-1)) {
             ((Item) it.next()).setRID(mid);
             out = true;
             break;
@@ -331,10 +340,11 @@ public class CatalogDatabase extends Database {
 
    public static int getReserve(int id) {
       Iterator it = catalog.iterator();
+      id--;
       int i = 0;
       int value = 0;
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
+         if(((Item) it.next()).getID() == (id-1)) {
             value = ((Item) it.next()).getRID();
             break;
          }
@@ -349,7 +359,7 @@ public class CatalogDatabase extends Database {
       Iterator it = catalog.iterator();
       int i = 0;
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
+         if(((Item) it.next()).getID() == (id-1)) {
             ((Item) it.next()).setCID(mid);
             break;
          }
@@ -364,7 +374,7 @@ public class CatalogDatabase extends Database {
       int i = 0;
       int value = 0;
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
+         if(((Item) it.next()).getID() == (id-1)) {
             value = ((Item) it.next()).getCID();
             break;
          }
@@ -379,7 +389,7 @@ public class CatalogDatabase extends Database {
       Iterator it = catalog.iterator();
       int i = 0;
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
+         if(((Item) it.next()).getID() == (id-1)) {
             if(catalog.get(i) instanceof Book) {
                if(field.compareTo("name") == 0) {
                   catalog.get(i).setName(newData);
