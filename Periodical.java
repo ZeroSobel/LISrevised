@@ -4,9 +4,9 @@ public class Periodical extends Item {
 	private String publisher;
 	private String topic;
 
-	public Periodical(String nameIn, int idIn, int datePubIn, int issueIn, 
+	public Periodical(String nameIn, int idIn, int orderIn, int ridIn, int cidIn, int datePubIn, int issueIn, 
 		String publisherIn, String topicIn) {
-		super(nameIn, idIn);
+		super(nameIn, idIn, orderIn, ridIn, cidIn);
 		datePub = datePubIn;
 		issue = issueIn;
 		publisher = publisherIn;

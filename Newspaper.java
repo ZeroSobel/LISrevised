@@ -6,9 +6,9 @@ public class Newspaper extends Periodical {
 	//private String publisher;
 	//private String topic;
 
-	public Newspaper(String nameIn, int idIn, int datePubIn, int issueIn, 
+	public Newspaper(String nameIn, int idIn, int orderIn, int ridIn, int cidIn, int datePubIn, int issueIn, 
 		String publisherIn, String topicIn) {
-		super(nameIn, idIn, datePubIn, issueIn, publisherIn, topicIn);
+		super(nameIn, idIn, orderIn, ridIn, cidIn, datePubIn, issueIn, publisherIn, topicIn);
 		/*
 		name = nameIn;
 		id = idIn;

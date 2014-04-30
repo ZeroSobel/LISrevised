@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.io.PrintWriter;
+import java.io.*;
 import java.lang.String;
 import java.text.Format;
 import java.lang.Integer;
@@ -23,6 +24,9 @@ public class CatalogDatabase extends Database {
             	// Extracting book's data fields
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               int order = Integer.parseInt(sc.nextLine());
+               int rid = Integer.parseInt(sc.nextLine());
+               int cid = Integer.parseInt(sc.nextLine());
                String author = sc.nextLine();
                String genre = sc.nextLine();
                String publisher = sc.nextLine();
@@ -33,7 +37,7 @@ public class CatalogDatabase extends Database {
                }
                int date = Integer.parseInt(stringDate);
             	// Add new item to database
-               catalog.add(new Book(name, id, author, genre, publisher, isbn, date));
+               catalog.add(new Book(name, id, order, rid, cid, author, genre, publisher, isbn, date));
                if(id > highestID) {
                   highestID = id;
                }
@@ -42,6 +46,9 @@ public class CatalogDatabase extends Database {
             	// Extracting audio datafields
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               int order = Integer.parseInt(sc.nextLine());
+               int rid = Integer.parseInt(sc.nextLine());
+               int cid = Integer.parseInt(sc.nextLine());
                String artist = sc.nextLine();
                String genre = sc.nextLine();
                String composer = sc.nextLine();
@@ -52,7 +59,8 @@ public class CatalogDatabase extends Database {
                }
                int date = Integer.parseInt(stringDate);
             	// Add new item to database
-               catalog.add(new Audio(name, id, artist, genre, composer, time, date));
+               Audio putme = new Audio(name, id, order, rid, cid, artist, genre, composer, time, date);
+               catalog.add(putme);
                if(id > highestID) {
                   highestID = id;
                }
@@ -60,6 +68,9 @@ public class CatalogDatabase extends Database {
             else if(format.compareTo("newspaper") == 0) {
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               int order = Integer.parseInt(sc.nextLine());
+               int rid = Integer.parseInt(sc.nextLine());
+               int cid = Integer.parseInt(sc.nextLine());
                String stringDate = sc.nextLine();
                while(stringDate.length() < 8) {
                   stringDate = stringDate + "0";
@@ -69,7 +80,7 @@ public class CatalogDatabase extends Database {
                String publisher = sc.nextLine();
                String topic = sc.nextLine();
             	// Add new item
-               catalog.add(new Newspaper(name, id, datePub, issue, publisher, topic));
+               catalog.add(new Newspaper(name, id, order, rid, cid, datePub, issue, publisher, topic));
                if(id > highestID) {
                   highestID = id;
                }
@@ -77,6 +88,9 @@ public class CatalogDatabase extends Database {
             else if(format.compareTo("journal") == 0) {
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               int order = Integer.parseInt(sc.nextLine());
+               int rid = Integer.parseInt(sc.nextLine());
+               int cid = Integer.parseInt(sc.nextLine());
                String stringDate = sc.nextLine();
                while(stringDate.length() < 8) {
                   stringDate = stringDate + "0";
@@ -87,7 +101,7 @@ public class CatalogDatabase extends Database {
                String topic = sc.nextLine();
                int issn = Integer.parseInt(sc.nextLine());
             	// Add new
-               catalog.add(new Journal(name, id, datePub, issue, publisher, topic, issn));
+               catalog.add(new Journal(name, id, order, rid, cid, datePub, issue, publisher, topic, issn));
                if(id > highestID) {
                   highestID = id;
                }
@@ -95,6 +109,9 @@ public class CatalogDatabase extends Database {
             else if(format.compareTo("magazine") == 0) {
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               int order = Integer.parseInt(sc.nextLine());
+               int rid = Integer.parseInt(sc.nextLine());
+               int cid = Integer.parseInt(sc.nextLine());
                String stringDate = sc.nextLine();
                while(stringDate.length() < 8) {
                   stringDate = stringDate + "0";
@@ -104,7 +121,7 @@ public class CatalogDatabase extends Database {
                String publisher = sc.nextLine();
                String topic = sc.nextLine();
             	// Add new item
-               catalog.add(new Magazine(name, id, datePub, issue, publisher, topic));
+               catalog.add(new Magazine(name, id, order, rid, cid, datePub, issue, publisher, topic));
                if(id > highestID) {
                   highestID = id;
                }
@@ -112,6 +129,9 @@ public class CatalogDatabase extends Database {
             else if(format.compareTo("video") == 0) {
                String name = sc.nextLine();
                int id = Integer.parseInt(sc.nextLine());
+               int order = Integer.parseInt(sc.nextLine());
+               int rid = Integer.parseInt(sc.nextLine());
+               int cid = Integer.parseInt(sc.nextLine());
                int length = Integer.parseInt(sc.nextLine());
                String stringDate = sc.nextLine();
                while(stringDate.length() < 8) {
@@ -119,7 +139,7 @@ public class CatalogDatabase extends Database {
                }
                int date = Integer.parseInt(stringDate);
             	// Add new item
-               catalog.add(new Video(name, id, length, date));
+               catalog.add(new Video(name, id, order, rid, cid,length, date));
                if(id > highestID) {
                   highestID = id;
                }
@@ -138,12 +158,16 @@ public class CatalogDatabase extends Database {
    public static void writeToFile() {
       for(Item item : catalog) {
          try {
-            PrintWriter writer = new PrintWriter(Integer.toString(item.getID()), "UTF-8");
+            //PrintWriter writer = new PrintWriter("Catalog/" + Integer.toString(item.getID()), "UTF-8");
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("Catalog/" + Integer.toString(item.getID()) + ".txt"), "UTF-8"));
             if(item instanceof Book) {
                Book bItem = (Book) item;
                writer.println("book");
                writer.println(bItem.getName());
                writer.println(bItem.getID());
+               writer.println(bItem.getOrder());
+               writer.println(bItem.getRID());
+               writer.println(bItem.getCID());
                writer.println(bItem.getAuthor());
                writer.println(bItem.getGenre());
                writer.println(bItem.getPublisher());
@@ -156,6 +180,9 @@ public class CatalogDatabase extends Database {
                writer.println("audio");
                writer.println(aItem.getName());
                writer.println(aItem.getID());
+               writer.println(aItem.getOrder());
+               writer.println(aItem.getRID());
+               writer.println(aItem.getCID());
                writer.println(aItem.getArtist());
                writer.println(aItem.getGenre());
                writer.println(aItem.getComposer());
@@ -168,6 +195,9 @@ public class CatalogDatabase extends Database {
                writer.println("newspaper");
                writer.println(nItem.getName());
                writer.println(nItem.getID());
+               writer.println(nItem.getOrder());
+               writer.println(nItem.getRID());
+               writer.println(nItem.getCID());
                writer.println(nItem.getDatePub());
                writer.println(nItem.getIssue());
                writer.println(nItem.getPublisher());
@@ -179,6 +209,9 @@ public class CatalogDatabase extends Database {
                writer.println("journal");
                writer.println(jItem.getName());
                writer.println(jItem.getID());
+               writer.println(jItem.getOrder());
+               writer.println(jItem.getRID());
+               writer.println(jItem.getCID());
                writer.println(jItem.getDatePub());
                writer.println(jItem.getIssue());
                writer.println(jItem.getPublisher());
@@ -191,6 +224,9 @@ public class CatalogDatabase extends Database {
                writer.println("magazine");
                writer.println(mItem.getName());
                writer.println(mItem.getID());
+               writer.println(mItem.getOrder());
+               writer.println(mItem.getRID());
+               writer.println(mItem.getCID());
                writer.println(mItem.getDatePub());
                writer.println(mItem.getIssue());
                writer.println(mItem.getPublisher());
@@ -202,6 +238,9 @@ public class CatalogDatabase extends Database {
                writer.println("video");
                writer.println(vItem.getName());
                writer.println(vItem.getID());
+               writer.println(vItem.getOrder());
+               writer.println(vItem.getRID());
+               writer.println(vItem.getCID());
                writer.println(vItem.getLength());
                writer.println(vItem.getDate());
                writer.close();
@@ -216,22 +255,124 @@ public class CatalogDatabase extends Database {
       }
    }
 
+   public static String dump() {
+      String output = "";
+      for(Item i : catalog) {
+         output = output + i.toString() + "\n";
+      }
+      return output;
+   }
+
    public static void add(Item itemIn) {
       catalog.add(itemIn);
    }
 
-   public static void remove(int id) {
+   public static boolean remove(int id) {
+      boolean out = false;
       Iterator it = catalog.iterator();
       int i = 0;
       while(it.hasNext()) {
          if(((Item) it.next()).getID() == id) {
             catalog.remove(i);
+            out = true;
+         }
+         else {
+            i++;
+         }
+      }
+      return out;
+   }
+
+   public static String find(String input) {
+      Iterator it = catalog.iterator();
+      String output = "";
+      while(it.hasNext()) {
+         String buffer = it.next().toString();
+         if(buffer.contains(input)) {
+            output = output + buffer + "\n";
+         }
+      }
+      if(output.compareTo("") == 0) {
+         output = "\nThere were no matches to your query.";
+      }
+      return output;
+   }
+   
+   public static void changeOrder(int id, int amount) {
+      Iterator it = catalog.iterator();
+      int i = 0;
+      while(it.hasNext()) {
+         if(((Item) it.next()).getID() == id) {
+            ((Item) it.next()).setOrder(amount);
             break;
          }
          else {
             i++;
          }
       }
+   }
+
+   public static boolean placeReserve(int id, int mid) {
+      boolean out = false;
+      Iterator it = catalog.iterator();
+      int i = 0;
+      while(it.hasNext()) {
+         if(((Item) it.next()).getID() == id) {
+            ((Item) it.next()).setRID(mid);
+            out = true;
+            break;
+         }
+         else {
+            i++;
+         }
+      }
+      return out;
+   }
+
+   public static int getReserve(int id) {
+      Iterator it = catalog.iterator();
+      int i = 0;
+      int value = 0;
+      while(it.hasNext()) {
+         if(((Item) it.next()).getID() == id) {
+            value = ((Item) it.next()).getRID();
+            break;
+         }
+         else {
+            i++;
+         }
+      }
+      return value;
+   }
+
+   public static void placeCheck(int id, int mid) {
+      Iterator it = catalog.iterator();
+      int i = 0;
+      while(it.hasNext()) {
+         if(((Item) it.next()).getID() == id) {
+            ((Item) it.next()).setCID(mid);
+            break;
+         }
+         else {
+            i++;
+         }
+      }
+   }
+
+   public static int getCheck(int id) {
+      Iterator it = catalog.iterator();
+      int i = 0;
+      int value = 0;
+      while(it.hasNext()) {
+         if(((Item) it.next()).getID() == id) {
+            value = ((Item) it.next()).getCID();
+            break;
+         }
+         else {
+            i++;
+         }
+      }
+      return value;
    }
 
    public static void modify(int id, String field, String newData) {

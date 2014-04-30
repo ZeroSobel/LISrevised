@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
 public class UIMainScreen extends UserInterface {
-   private static final String notLogged = "Options:\n1) Log in\n2) Register\n3) Navigate Catalog";
+   private static final String notLogged = "Options:\n1) Log in\n2) Register\n3) Navigate Catalog\n4) Shut down\n";
    private static final String logged = "Options:\n1) Navigate Catalog\n2) Reserve Computer Time\n" + 
-   	"3) Reserve an Item\n4) Recall an Item\n5) Manage Account\n";
-   private static final String admin = "Options:\n1) Navigate Catalog\n2) Check Out\n3) Check In\n" +
+   	"3) Reserve an Item\n4) Recall an Item\n5) Manage Account\n6) Shut down\n";
+   private static final String adminS = "Options:\n1) Navigate Catalog\n2) Check Out\n3) Check In\n" +
    	"4) Catalog Report\n5) Order Inventory\n6) Process Fee\n7) Add Item\n8) Remove Item\n" +
-   	"9) Modify Item\n10) Query Sister Libraries\n11) Member Report\n12) Modify Account";
+   	"9) Modify Item\n10) Query Sister Libraries\n11) Member Report\n12) Modify Account\n13) Shut down\n";
 
    public UIMainScreen() {
    
@@ -21,7 +21,7 @@ public class UIMainScreen extends UserInterface {
          Scanner sc = new Scanner(System.in);
          while(!pass) {
             selection = sc.nextInt();
-            if(selection > 0 && selection < 4) {
+            if(selection > 0 && selection < 5) {
                pass = true;
             }
          }
@@ -39,11 +39,11 @@ public class UIMainScreen extends UserInterface {
          execute(selection, loggedIn, admin);
       }
       else if(loggedIn && admin) {
-         System.out.println(admin);
+         System.out.println(adminS);
          Scanner sc = new Scanner(System.in);
          while(!pass) {
             selection = sc.nextInt();
-            if(selection > 0 || selection < 13) {
+            if(selection > 0 || selection < 14) {
                pass = true;
             }
          }
@@ -62,6 +62,11 @@ public class UIMainScreen extends UserInterface {
                break;
             case 3: UINavigateCatalog.show(loggedIn, admin);
                break;
+            case 4:
+               MemberDatabase.writeToFile();
+               TransactionDatabase.writeToFile();
+               CatalogDatabase.writeToFile();
+               System.exit(0);
             default: UIMainScreen.show(loggedIn, admin);
                break;
          }
@@ -70,7 +75,7 @@ public class UIMainScreen extends UserInterface {
          switch(input) {
             case 1:  UINavigateCatalog.show(loggedIn, admin);
                break;
-            case 2: UIReserveComputerTime.show(loggedIn, admin);
+            case 2: UIReserveComp.show(loggedIn, admin);
                break;
             case 3: UIReserveItem.show(loggedIn, admin);
                break;
@@ -78,6 +83,11 @@ public class UIMainScreen extends UserInterface {
                break;
             case 5: UIModifyAccount.show(loggedIn, admin);
                break;
+            case 6:
+               MemberDatabase.writeToFile();
+               TransactionDatabase.writeToFile();
+               CatalogDatabase.writeToFile();
+               System.exit(0);
             default: UIMainScreen.show(loggedIn, admin);
                break;
          }
@@ -94,7 +104,7 @@ public class UIMainScreen extends UserInterface {
                break;
             case 5: UIOrderInventory.show(loggedIn, admin);
                break;
-            case 6: UIProcessFee.show(loggedIn, admin);
+            case 6: UIPayFee.show(loggedIn, admin);
                break;
             case 7: UIAddItem.show(loggedIn, admin);
                break;
@@ -108,6 +118,11 @@ public class UIMainScreen extends UserInterface {
                break;
             case 12: UIModifyAccount.show(loggedIn, admin);
                break;
+            case 13:
+               MemberDatabase.writeToFile();
+               TransactionDatabase.writeToFile();
+               CatalogDatabase.writeToFile();
+               System.exit(0);
             default: UIMainScreen.show(loggedIn, admin);
                break;
          }

@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.String;
 import java.text.Format;
 import java.lang.Integer;
@@ -11,6 +11,10 @@ import java.lang.Boolean;
 
 public class TransactionDatabase extends Database {
    private static ArrayList<Transaction> transList = new ArrayList<Transaction>();
+
+   public static int getSize() {
+      return transList.size();
+   }
 
    public static void readStart(File folder) {
       String header;
@@ -72,9 +76,10 @@ public class TransactionDatabase extends Database {
    public static void writeToFile() {
       for(Transaction trans : transList) {
          try {
-            PrintWriter writer = new PrintWriter(Integer.toString(trans.getID()), "UTF-8");
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("Transactions/" + Integer.toString(trans.getID()) + ".txt"), "UTF-8"));
             if(trans instanceof Rental) {
                Rental rTrans = (Rental) trans;
+               writer.println("rental");
                writer.println(rTrans.getID());
                writer.println(rTrans.getMemberID());
                writer.println(rTrans.getDate());
@@ -85,6 +90,7 @@ public class TransactionDatabase extends Database {
                writer.close();
             }
             else if(trans instanceof Fee) {
+               writer.println("fee");
                Fee fTrans = (Fee) trans;
                writer.println(fTrans.getID());
                writer.println(fTrans.getMemberID());
@@ -94,10 +100,11 @@ public class TransactionDatabase extends Database {
             }
             else if(trans instanceof ReserveCompTime) {
                ReserveCompTime rTrans = (ReserveCompTime) trans;
+               writer.println("reservecomp");
                writer.println(rTrans.getID());
                writer.println(rTrans.getMemberID());
                writer.println(rTrans.getDate());
-               writer.println(rTrans.getCompID());
+               writer.println((int)rTrans.getCompID());
                writer.close();
             }
             else {
@@ -115,19 +122,40 @@ public class TransactionDatabase extends Database {
       transList.add(in);
    }
 
-   public static void remove(int id) {
+   public static boolean remove(int id) {
       Iterator it = transList.iterator();
+      boolean out = false;
       int i = 0;
       while(it.hasNext()) {
-         if(((Item) it.next()).getID() == id) {
+         if(((Transaction) it.next()).getID() == id) {
             transList.remove(i);
-            break;
+            out = true;
          }
          else {
             i++;
          }
       }
+      return out;
    }
+
+   public static Transaction findUnreturnedByID(int id) {
+      Iterator it = transList.iterator();
+      int i = 0;
+      Transaction output = null;
+      while(it.hasNext()) {
+         if(it.next() instanceof Rental) {
+            Rental holder = (Rental) transList.get(i);
+            if(holder.getItemID() == id && holder.getReturnDate() == 0) {
+               output = holder;
+            }
+         }
+         else {
+            i++;
+         }
+      }
+      return output;
+   }
+
 
    public static void modify(int id, String field, String newData) {
       Iterator it = transList.iterator();

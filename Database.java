@@ -12,6 +12,8 @@ public class Database {
    public static void writeToFile() {
    
    }
-	public static void remove(int i) {}
+	public static boolean remove(int i) {
+      return false;
+   }
    public static void modify(int i, String field, String newData){}
 }

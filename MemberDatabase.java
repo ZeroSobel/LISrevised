@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.String;
 import java.text.Format;
 import java.lang.Integer;
@@ -62,13 +62,14 @@ public class MemberDatabase extends Database {
 	public static void writeToFile() {
    		for(Account account : members) {
         try {
-          PrintWriter writer = new PrintWriter(Integer.toString(account.getAccountID()), "UTF-8");
+          PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream("Accounts/" + Integer.toString(account.getAccountID()) + ".txt"), "UTF-8"));
           if(account instanceof Employee) {
             Employee eAccount = (Employee) account;
             writer.println("employee");
             writer.println(eAccount.getName());
             writer.println(eAccount.getPhone());
             writer.println(eAccount.getAddress());
+            writer.println(eAccount.getAccountID());
             writer.println(eAccount.getAccountPassword());
             writer.println(Boolean.toString(eAccount.getPriv()));
             writer.close();
@@ -79,6 +80,7 @@ public class MemberDatabase extends Database {
             writer.println(mAccount.getName());
             writer.println(mAccount.getPhone());
             writer.println(mAccount.getAddress());
+            writer.println(mAccount.getAccountID());
             writer.println(mAccount.getAccountPassword());
             writer.println(Double.toString(mAccount.getFee()));
             writer.close();
@@ -96,19 +98,53 @@ public class MemberDatabase extends Database {
         members.add(in);
     }
 
-    public static void remove(int id) {
+    public static boolean remove(int id) {
     	Iterator it = members.iterator();
+        boolean out = false;
     	int i = 0;
     	while(it.hasNext()) {
         	if(((Account)it.next()).getAccountID() == id) {
             	members.remove(i);
-            	break;
+            	out = true;
         	}
         	else {
             	i++;
         	}
     	}
+        return out;
 	}
+
+    public static Account find(int id) {
+        Iterator it = members.iterator();
+        int i = 0;
+        Account output = null;
+        while(it.hasNext()) {
+            if(((Account)it.next()).getAccountID() == id) {
+                output = (Account) members.get(i);
+                break;
+            }
+            else {
+                i++;
+            }
+        }
+        return output;
+    }
+
+    public static String getPassByID(int id) {
+        Iterator it = members.iterator();
+        int i = 0;
+        String output = "";
+        while(it.hasNext()) {
+            if(((Account)it.next()).getAccountID() == id) {
+                output = ((Account) members.get(i)).getAccountPassword();
+                break;
+            }
+            else {
+                i++;
+            }
+        }
+        return output;
+    }
 
 	public static void modify(int id, String field, String newData) {
    		Iterator it = members.iterator();

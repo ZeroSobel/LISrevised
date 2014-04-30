@@ -14,20 +14,20 @@ public class UINavigateCatalog extends UserInterface {
    public static void show(boolean loggedIn, boolean admin) {
       boolean repeat = true;
       String selection = "";
-      Scanncer sc = new Scanner(System.in);
-      System.out.prinln(prompt);
+      Scanner sc = new Scanner(System.in);
+      System.out.println(prompt);
       selection = sc.nextLine();
       execute(selection, loggedIn, admin);
    }
    
    public static void execute(String input, boolean loggedIn, boolean admin) {
       Scanner sc = new Scanner(System.in);
-      String selection = "";
+      String selection = ""; 
       if(input.compareTo("goback") == 0) {
          UIMainScreen.show(loggedIn, admin);
       }
       else {
-         System.out.println("\n" + CatalogController.search(selection));
+         System.out.println("\n" + CatalogController.search(input));
          System.out.println(sagain);
          selection = sc.nextLine();
          if(selection.compareToIgnoreCase("y") == 0) {

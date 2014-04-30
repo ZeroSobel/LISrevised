@@ -1,18 +1,14 @@
 public class Audio extends Item {
-	//private String name;
-	//private int id;
 	private String artist;
 	private String genre;
 	private String composer;
 	private int time;
 	private int date;
 
-	public Audio(String nameIn, int idIn, String artistIn, String genreIn, 
+	public Audio(String nameIn, int idIn, int orderIn, int ridIn, int cidIn, String artistIn, String genreIn, 
 		String composerIn, int timeIn, int dateIn) {
 		
-		super(nameIn, idIn);
-		//name = nameIn;
-		//id = idIn;
+		super(nameIn, idIn, orderIn, ridIn, cidIn);
 		artist = artistIn;
 		genre = genreIn;
 		composer = composerIn;

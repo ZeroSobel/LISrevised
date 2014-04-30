@@ -9,9 +9,9 @@ public class Journal extends Periodical {
 	*/
 	private int issn;
 
-	public Journal(String nameIn, int idIn, int datePubIn, int issueIn, 
+	public Journal(String nameIn, int idIn, int orderIn, int ridIn, int cidIn, int datePubIn, int issueIn, 
 		String publisherIn, String topicIn, int issnIn) {
-		super(nameIn, idIn, datePubIn, issueIn, publisherIn, topicIn);
+		super(nameIn, idIn, orderIn, ridIn, cidIn, datePubIn, issueIn, publisherIn, topicIn);
 		/*
 		name = nameIn;
 		id = idIn;

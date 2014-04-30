@@ -4,8 +4,8 @@ public class Video extends Item {
 	private int length;
 	private int date;
 
-	public Video(String nameIn, int idIn, int lengthIn, int dateIn) {
-		super(nameIn, idIn);
+	public Video(String nameIn, int idIn, int orderIn, int ridIn, int cidIn, int lengthIn, int dateIn) {
+		super(nameIn, idIn, orderIn, ridIn, cidIn);
 		//name = nameIn;
 		//id = idIn;
 		length = lengthIn;
