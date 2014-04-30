@@ -1,7 +1,8 @@
 public class UserInterface {
 	private Controller controller;
 	private String inputBuffer;
-	private boolean login;
+	private static boolean login;
+   private static boolean admin;
 
 	public UserInterface() {
 		controller = new Controller();
@@ -15,4 +16,17 @@ public class UserInterface {
 	public static void execute(String input) {
 		
 	}
+   
+   public static void setLogin(boolean in) {
+      login = in;
+   }
+   public static boolean getLogin() {
+      return login;
+   }
+   public static void setAdmin(boolean in) {
+      admin = in;
+   }
+   public static boolean getAdmin() {
+      return admin;
+   }
 }
