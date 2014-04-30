@@ -1,6 +1,6 @@
 public class UserInterface {
 	private Controller controller;
-	private String inputBuffer;
+	protected static String inputBuffer;
 	private boolean login;
 
 	public UserInterface() {
