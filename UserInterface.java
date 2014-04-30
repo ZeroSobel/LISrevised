@@ -1,30 +1,22 @@
 public class UserInterface {
-	private Controller controller;
-<<<<<<< HEAD
-	protected static String inputBuffer;
-	private boolean login;
-=======
-	private String inputBuffer;
-	private static boolean login;
-   private static boolean admin;
->>>>>>> 776b17dd679bfd1d6c2918d0d677c4b74e3a58cb
+    private Controller controller;
+    protected static String inputBuffer;
+    private static boolean login;
+    private static boolean admin;
 
-	public UserInterface() {
-		controller = new Controller();
-		login = false;
-		inputBuffer = "";
-	}
+    public UserInterface() {
+	controller = new Controller();
+	login = false;
+	inputBuffer = "";
+    }
 
-	public static void show() {
+    public static void show() {
 
-	}
-	public static void execute(String input) {
+    }
+    public static void execute(String input) {
 		
-	}
-<<<<<<< HEAD
-}
-=======
-   
+    }
+
    public static void setLogin(boolean in) {
       login = in;
    }
@@ -38,4 +30,3 @@ public class UserInterface {
       return admin;
    }
 }
->>>>>>> 776b17dd679bfd1d6c2918d0d677c4b74e3a58cb
